@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news/api/api_manager.dart';
-import 'package:news/home/category_details/source_tab_widget.dart';
+import 'package:news/home/category_details/sources/source_tab_widget.dart';
 import 'package:news/model/source_response.dart';
 import 'package:news/utils/app_colors.dart';
 
