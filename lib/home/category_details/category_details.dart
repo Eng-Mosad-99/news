@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news/api/api_manager.dart';
+import 'package:news/home/category_details/source_tab_widget.dart';
 import 'package:news/model/source_response.dart';
 import 'package:news/utils/app_colors.dart';
 
@@ -9,14 +10,12 @@ class CategoryDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<SourceResponse?>(
-      future: ApiManager.getSources(
-
-      ), 
+      future: ApiManager.getSources(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator(
-            color: AppColors.greyColor,
-          ));
+          return const Center(
+            child: CircularProgressIndicator(color: AppColors.greyColor),
+          );
         } else if (snapshot.hasError) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -26,37 +25,38 @@ class CategoryDetails extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   // Trigger a rebuild to retry fetching data
-                  (context as Element).reassemble();
+                  ApiManager.getSources();
                 },
                 child: const Text('Retry'),
               ),
             ],
           );
-        } 
-         if (snapshot.data?.status != 'ok') {
-return Column(
+        }
+        if (snapshot.data?.status != 'ok') {
+          return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text('Error: ${snapshot.data!.message }'),
+              Text('Error: ${snapshot.data!.message}'),
               ElevatedButton(
                 onPressed: () {
                   // Trigger a rebuild to retry fetching data
-                  (context as Element).reassemble();
+                  ApiManager.getSources();
                 },
                 child: const Text('Retry'),
               ),
             ],
-          );        } else {
+          );
+        } else {
           SourceResponse sourceResponse = snapshot.data!;
-          return ListView.builder(
-            itemCount: sourceResponse.sources?.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(sourceResponse.sources?[index].name ?? 'No name'),
-                subtitle: Text(sourceResponse.sources?[index].description ?? 'No description'),
-              );
-            },
+          return SizedBox(
+            height: 30,
+            child: ListView.builder(
+              itemCount: sourceResponse.sources?.length,
+              itemBuilder: (context, index) {
+                return SourceTabWidget(sourcesList: sourceResponse.sources!);
+              },
+            ),
           );
         }
       },
