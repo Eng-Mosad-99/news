@@ -1,10 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:news/utils/app_styles.dart';
 
 class DrawerItem extends StatelessWidget {
-  const DrawerItem({super.key});
+  final String icon;
+  final String text;
+
+  const DrawerItem({super.key, required this.icon, required this.text});
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: width * 0.04,
+        vertical: height * 0.02,
+      ),
+      child: Row(
+        children: [
+          Image.asset(icon),
+          SizedBox(width: width * 0.04),
+          Text(text, style: AppStyles.bold20White),
+        ],
+      ),
+    );
   }
 }
