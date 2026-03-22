@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       routes: {AppRoutes.homeRouteName: (context) => const HomeScreen()},
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.dark,
     );
   }
 }
