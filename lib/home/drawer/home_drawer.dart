@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news/home/drawer/widget/app_config_bottom_sheet.dart';
 import 'package:news/home/drawer/widget/drawer_item.dart';
 import 'package:news/utils/app_colors.dart';
 import 'package:news/utils/app_styles.dart';
@@ -39,6 +40,18 @@ class HomeDrawer extends StatelessWidget {
             endIndent: width * 0.04,
           ),
           DrawerItem(icon: AssetsManager.themeIcon, text: 'Theme'),
+          AppConfigBottomSheet(text: 'Dark'),
+          SizedBox(
+            height: height * 0.02,
+          ),
+          Divider(
+            color: AppColors.whiteColor,
+            thickness: 2,
+            indent: width * 0.04,
+            endIndent: width * 0.04,
+          ),
+          DrawerItem(icon: AssetsManager.languageIcon, text: 'Language'),
+          AppConfigBottomSheet(text: 'English'),
         ],
       ),
     );
