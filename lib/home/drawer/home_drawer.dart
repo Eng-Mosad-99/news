@@ -6,8 +6,8 @@ import 'package:news/utils/app_styles.dart';
 import 'package:news/utils/assets_manager.dart';
 
 class HomeDrawer extends StatelessWidget {
-  const HomeDrawer({super.key});
-
+  const HomeDrawer({super.key, required this.onGoToHomeClick});
+final VoidCallback onGoToHomeClick;
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.sizeOf(context).width;
@@ -29,7 +29,7 @@ class HomeDrawer extends StatelessWidget {
           InkWell(
               onTap: () {
                 //todo: go to home
-                
+                onGoToHomeClick();
               },
               child:
                   DrawerItem(icon: AssetsManager.homeIcon, text: 'Go To Home')),

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:news/home/category_fragment/widgets/category_item.dart';
 import 'package:news/model/category.dart';
-
+typedef OnCategoryItemClick = void Function(Category category);
 class CategoryFragment extends StatelessWidget {
-   CategoryFragment({super.key});
+   CategoryFragment({super.key , required this.onCategoryItemClick});
  List<Category> categoriesList = [];
+ OnCategoryItemClick onCategoryItemClick;
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -28,7 +29,7 @@ class CategoryFragment extends StatelessWidget {
                     return InkWell(
                       onTap: () {
                         //todo: show category details
-                        
+                        onCategoryItemClick(categoriesList[index]);
                       },
                       child: CategoryItem(
                        index: index,
