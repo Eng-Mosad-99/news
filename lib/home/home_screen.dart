@@ -12,7 +12,9 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title:  Text('News App' , style: Theme.of(context).textTheme.headlineLarge),
       ),
-      drawer: HomeDrawer(),
+      drawer: Drawer(
+        child: HomeDrawer(),
+      ),
       body: CategoryFragment(),
     );
   }
