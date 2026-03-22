@@ -9,57 +9,68 @@ class CategoryDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<SourceResponse?>(
+    return     FutureBuilder<SourceResponse?>(
       future: ApiManager.getSources(),
       builder: (context, snapshot) {
+        //todo: loading
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
-            child: CircularProgressIndicator(color: AppColors.greyColor),
-          );
-        } else if (snapshot.hasError) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text('Error: ${snapshot.error}'),
-              ElevatedButton(
-                onPressed: () {
-                  // Trigger a rebuild to retry fetching data
-                  ApiManager.getSources();
-                },
-                child: const Text('Retry'),
-              ),
-            ],
-          );
-        }
-        if (snapshot.data?.status != 'ok') {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text('Error: ${snapshot.data!.message}'),
-              ElevatedButton(
-                onPressed: () {
-                  // Trigger a rebuild to retry fetching data
-                  ApiManager.getSources();
-                },
-                child: const Text('Retry'),
-              ),
-            ],
-          );
-        } else {
-          SourceResponse sourceResponse = snapshot.data!;
-          return SizedBox(
-            height: 30,
-            child: ListView.builder(
-              itemCount: sourceResponse.sources?.length,
-              itemBuilder: (context, index) {
-                return SourceTabWidget(sourcesList: sourceResponse.sources!);
-              },
+            child: CircularProgressIndicator(
+              color: AppColors.greyColor,
             ),
           );
         }
+        //todo: error => client
+        else if (snapshot.hasError) {
+          return Column(
+            children: [
+              Text(
+                'Something went wrong',
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.greyColor),
+                  onPressed: () {
+                    ApiManager.getSources();
+                  },
+                  child: Text(
+                    'Try Again',
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ))
+            ],
+          );
+        }
+        //todo: server => response => success , error
+        //todo: server => error
+        if (snapshot.data?.status != 'ok') {
+          return Column(
+            children: [
+              Text(
+                snapshot.data!.message!,
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.greyColor),
+                  onPressed: () {
+                    ApiManager.getSources();
+                   
+                  },
+                  child: Text(
+                    'Try Again',
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ))
+            ],
+          );
+        }
+        //todo: server => success
+        var sourcesList = snapshot.data?.sources ?? [];
+        return SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: SourceTabWidget(sourcesList: sourcesList),
+        );
       },
     );
-  }
+    }
 }

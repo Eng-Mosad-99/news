@@ -4,6 +4,8 @@ import 'package:news/home/category_details/sources/source_name.dart';
 import 'package:news/model/source_response.dart';
 import 'package:news/utils/app_colors.dart';
 
+import '../news/news_widget.dart';
+
 class SourceTabWidget extends StatefulWidget {
  final List<Source> sourcesList;
 
@@ -39,7 +41,8 @@ class _SourceTabWidgetState extends State<SourceTabWidget> {
                             widget.sourcesList.indexOf(source));
                   },
                 ).toList()),
-            
+            Expanded(
+                child: NewsWidget(source: widget.sourcesList[selectedIndex]))
           ],
         ));
   }
