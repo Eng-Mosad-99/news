@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news/api/api_manager.dart';
+import 'package:news/api/dio_api_manager.dart';
 import 'package:news/home/category_details/sources/source_tab_widget.dart';
 import 'package:news/model/category.dart';
 import 'package:news/model/source_response.dart';
@@ -11,7 +11,7 @@ final Category category;
   @override
   Widget build(BuildContext context) {
     return     FutureBuilder<SourceResponse?>(
-      future: ApiManager.getSources(categoryId: category.id),
+      future: DioApiManager().getSources(categoryId: category.id),
       builder: (context, snapshot) {
         //todo: loading
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -33,7 +33,7 @@ final Category category;
                   style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.greyColor),
                   onPressed: () {
-                    ApiManager.getSources(
+                    DioApiManager().getSources(
                       categoryId: category.id
                     );
                   },
@@ -57,7 +57,7 @@ final Category category;
                   style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.greyColor),
                   onPressed: () {
-                    ApiManager.getSources(categoryId: category.id);
+                    DioApiManager().getSources(categoryId: category.id);
                    
                   },
                   child: Text(

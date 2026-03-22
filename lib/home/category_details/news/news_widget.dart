@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news/api/api_manager.dart';
+import 'package:news/api/dio_api_manager.dart';
 import 'package:news/home/category_details/news/news_item.dart';
 import 'package:news/model/news_response.dart';
 import 'package:news/model/source_response.dart';
@@ -13,7 +13,7 @@ class NewsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<NewsResponse?>(
-      future: ApiManager.getNewsBySourceId(source.id ?? ''),
+      future: DioApiManager().getNewsBySourceId(source.id ?? ''),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
@@ -31,7 +31,7 @@ class NewsWidget extends StatelessWidget {
                   backgroundColor: AppColors.greyColor,
                 ),
                 onPressed: () {
-                  ApiManager.getNewsBySourceId(source.id ?? '');
+                  DioApiManager().getNewsBySourceId(source.id ?? '');
                 },
                 child: Text(
                   'Try Again',
@@ -53,7 +53,7 @@ class NewsWidget extends StatelessWidget {
                   backgroundColor: AppColors.greyColor,
                 ),
                 onPressed: () {
-                  ApiManager.getNewsBySourceId(source.id ?? '');
+                  DioApiManager().getNewsBySourceId(source.id ?? '');
                 },
                 child: Text(
                   'Try Again',
