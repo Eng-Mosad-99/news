@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:news/api/api_constants.dart';
+import 'package:news/api/dio_interceptors.dart';
 import 'package:news/api/end_points.dart';
 import 'package:news/model/news_response.dart';
 import 'package:news/model/source_response.dart';
@@ -16,25 +17,26 @@ class DioApiManager {
   );
 
   DioApiManager() {
-    _dio.interceptors.add(PrettyDioLogger(
-        requestHeader: true,
-        requestBody: true,
-        responseBody: true,
-        responseHeader: false,
-        error: true,
-        compact: true,
-        maxWidth: 90,
-        enabled: kDebugMode,
-        filter: (options, args){
-            // don't print requests with uris containing '/posts' 
-            if(options.path.contains('/posts')){
-              return false;
-            }
-            // don't print responses with unit8 list data
-            return !args.isResponse || !args.hasUint8ListData;
-          }
-      )
-    );
+    _dio.interceptors.add(DioInterceptors());
+    // _dio.interceptors.add(PrettyDioLogger(
+    //     requestHeader: true,
+    //     requestBody: true,
+    //     responseBody: true,
+    //     responseHeader: false,
+    //     error: true,
+    //     compact: true,
+    //     maxWidth: 90,
+    //     enabled: kDebugMode,
+    //     filter: (options, args){
+    //         // don't print requests with uris containing '/posts' 
+    //         if(options.path.contains('/posts')){
+    //           return false;
+    //         }
+    //         // don't print responses with unit8 list data
+    //         return !args.isResponse || !args.hasUint8ListData;
+    //       }
+    //   )
+    // );
   }
   
 
