@@ -1,7 +1,15 @@
-class SourceResponse {
+import 'package:hive/hive.dart';
+part 'source_response.g.dart';
+
+@HiveType(typeId: 0)
+class SourceResponse extends HiveObject {
+  @HiveField(0)
   String? status;
+  @HiveField(1)
   String? code;
+  @HiveField(2)
   String? message;
+  @HiveField(3)
   List<Source>? sources;
 
   SourceResponse({this.status, this.code, this.message, this.sources});
@@ -28,23 +36,32 @@ class SourceResponse {
   }
 }
 
-class Source {
+@HiveType(typeId: 1)
+class Source extends HiveObject {
+  @HiveField(0)
   String? id;
+  @HiveField(1)
   String? name;
+  @HiveField(2)
   String? description;
+  @HiveField(3)
   String? url;
+  @HiveField(4)
   String? category;
+  @HiveField(5)
   String? language;
+  @HiveField(6)
   String? country;
 
-  Source(
-      {this.id,
-      this.name,
-      this.description,
-      this.url,
-      this.category,
-      this.language,
-      this.country});
+  Source({
+    this.id,
+    this.name,
+    this.description,
+    this.url,
+    this.category,
+    this.language,
+    this.country,
+  });
 
   Source.fromJson(Map<String, dynamic> json) {
     id = json['id'];
