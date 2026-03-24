@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news/api/dio_api_manager.dart';
+import 'package:news/di/di.dart';
 import 'package:news/home/category_details/news/cubit/news_cubit.dart';
 import 'package:news/home/category_details/news/cubit/news_state.dart';
 import 'package:news/home/category_details/news/news_item.dart';
-import 'package:news/model/news_response.dart';
 import 'package:news/model/source_response.dart';
 import 'package:news/utils/app_colors.dart';
 
@@ -16,7 +15,8 @@ class NewsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<NewsCubit, NewsState>(
-      bloc: NewsCubit()..getNewsBySourceId(source.id ?? ''),
+      bloc: NewsCubit(newsRepository: injectNewsRepository())
+        ..getNewsBySourceId(source.id ?? ''),
       listener: (context, state) {
         if (state is MessageState) {
           showDialog(
@@ -34,21 +34,21 @@ class NewsWidget extends StatelessWidget {
                   ),
                 ],
               );
-            });
+            },
+          );
         }
       },
       listenWhen: (previous, current) {
-        if(current is MessageState) {
+        if (current is MessageState) {
           return true;
         }
         return false;
       },
       buildWhen: (previous, current) {
-        if(current is MessageState) {
+        if (current is MessageState) {
           return false;
         }
         return true;
-        
       },
       builder: (context, state) {
         if (state is NewsError) {

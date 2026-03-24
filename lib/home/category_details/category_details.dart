@@ -1,24 +1,21 @@
-import 'dart:math';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news/api/app_exception.dart';
-import 'package:news/api/dio_api_manager.dart';
+import 'package:news/di/di.dart';
 import 'package:news/home/category_details/cubit/category_cubit.dart';
 import 'package:news/home/category_details/cubit/category_states.dart';
 import 'package:news/home/category_details/sources/source_tab_widget.dart';
 import 'package:news/model/category.dart';
-import 'package:news/model/source_response.dart';
 import 'package:news/utils/app_colors.dart';
 
 class CategoryDetails extends StatelessWidget {
-  CategoryDetails({super.key, required this.category});
+  const CategoryDetails({super.key, required this.category});
   final Category category;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CategoryCubit()..getSources(categoryId: category.id),
+      create: (context) =>
+          CategoryCubit(sourceRepository: injectSourceRepository())
+            ..getSources(categoryId: category.id),
       child: BlocBuilder<CategoryCubit, CategoryState>(
         builder: (context, state) {
           CategoryCubit cubit = context.read<CategoryCubit>();
@@ -59,7 +56,7 @@ class CategoryDetails extends StatelessWidget {
               );
             }
           } else {
-             return const Center(
+            return const Center(
               child: CircularProgressIndicator(color: AppColors.greyColor),
             );
           }
@@ -149,7 +146,6 @@ class CategoryDetails extends StatelessWidget {
     //         child: Text('Starting Fetching Sources',style: Theme.of( context).textTheme.headlineMedium,),
     //       );
     //     }
-
     //   },
     // );
   }
