@@ -1,10 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:news/data/repository/sources/repo/source_repository.dart';
 import 'package:news/home/category_details/cubit/category_states.dart';
 import 'package:news/model/source_response.dart';
-
+@injectable
 class CategoryCubit extends Cubit<CategoryState>{
  final SourceRepository sourceRepository;
   CategoryCubit({required this.sourceRepository}) : super(CategoryInitial());

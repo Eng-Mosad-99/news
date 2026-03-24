@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
+import 'package:news/di/di_injectable.dart';
 import 'package:news/home/home_screen.dart';
 import 'package:news/model/source_response.dart';
 import 'package:news/utils/app_routes.dart';
@@ -16,6 +17,8 @@ void main()async {
   Hive.registerAdapter(SourceAdapter());
   Hive.registerAdapter(SourceResponseAdapter());
   Bloc.observer = MyBlocObserver();
+   configureDependencies();  
+
   runApp(const MyApp());
 }
 

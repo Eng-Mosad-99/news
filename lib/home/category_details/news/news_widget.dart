@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news/data/repository/news/repo/news_repo.dart';
 import 'package:news/di/di.dart';
+import 'package:news/di/di_injectable.dart';
 import 'package:news/home/category_details/news/cubit/news_cubit.dart';
 import 'package:news/home/category_details/news/cubit/news_state.dart';
 import 'package:news/home/category_details/news/news_item.dart';
@@ -15,7 +17,7 @@ class NewsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<NewsCubit, NewsState>(
-      bloc: NewsCubit(newsRepository: injectNewsRepository())
+      bloc: getIt<NewsCubit>()
         ..getNewsBySourceId(source.id ?? ''),
       listener: (context, state) {
         if (state is MessageState) {

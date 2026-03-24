@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news/di/di.dart';
+import 'package:news/di/di_injectable.dart';
 import 'package:news/home/category_details/cubit/category_cubit.dart';
 import 'package:news/home/category_details/cubit/category_states.dart';
 import 'package:news/home/category_details/sources/source_tab_widget.dart';
@@ -14,7 +15,7 @@ class CategoryDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          CategoryCubit(sourceRepository: injectSourceRepository())
+          getIt<CategoryCubit>()
             ..getSources(categoryId: category.id),
       child: BlocBuilder<CategoryCubit, CategoryState>(
         builder: (context, state) {
